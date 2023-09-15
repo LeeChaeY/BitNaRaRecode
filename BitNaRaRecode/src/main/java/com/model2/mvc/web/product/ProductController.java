@@ -85,7 +85,8 @@ public class ProductController {
 	            try {
 	                // 업로드된 파일 저장
 //	            	String uploadDir = "C:\\work\\03.git\\bit-mini-09model2\\09.Model2MVCShop(stu)\\src\\main\\\\webapp\\images\\uploadFiles\\";
-	            	String uploadDir = "F:\\git\\bit-mini-10model2\\10.Model2MVCShop(stu)\\src\\main\\webapp\\images\\uploadFiles\\";
+//	            	String uploadDir = "F:\\git\\bit-mini-10model2\\10.Model2MVCShop(stu)\\src\\main\\webapp\\images\\uploadFiles\\";
+	            	String uploadDir = "C:\\work\\03.git\\BitNaRaRecode\\BitNaRaRecode\\src\\main\\webapp\\images\\uploadFiles";
 //	                String uploadDir = "\\images\\uploadFiles\\"; // 실제 경로로 변경해야 합니다.
 	            	for (int i=0; i<files.size(); i++) {
 		                File uploadFile = new File(uploadDir, files.get(i).getOriginalFilename());
