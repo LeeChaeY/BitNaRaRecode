@@ -11,11 +11,22 @@ import org.springframework.stereotype.Service;
 import com.model2.mvc.common.Search;
 import com.model2.mvc.service.purchase.PurchaseService;
 import com.model2.mvc.service.purchase.dao.PurchaseDao;
+import com.model2.mvc.service.user.UserService;
 import com.model2.mvc.service.domain.Product;
 import com.model2.mvc.service.domain.Purchase;
+import com.model2.mvc.service.domain.User;
+import com.model2.mvc.service.product.ProductService;
 
 @Service("purchaseServiceImpl")
 public class PurchaseServiceImpl implements PurchaseService {
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
+	
+	@Autowired
+	@Qualifier("productServiceImpl")
+	private ProductService productService;
+	
 	@Autowired
 	@Qualifier("purchaseDaoImpl")
 	private PurchaseDao purchaseDao;
@@ -28,19 +39,50 @@ public class PurchaseServiceImpl implements PurchaseService {
 		System.out.println(":: "+getClass()+" default Constructor Call.....");
 	}
 	
-	public int addPurchase(Purchase purchase) throws Exception {
-		return purchaseDao.addPurchase(purchase);
+	public Purchase addPurchase(Purchase purchase) throws Exception {
+		purchaseDao.addPurchase(purchase);
+		productService.updateProdAmount(purchase.getPurchaseProd().getProdNo(), purchase.getTranAmount());
+		
+		return purchaseDao.getPurchase(purchaseDao.getSeq_transaction_tran_no());
 	}
 
 	public Purchase getPurchase(int tranNo) throws Exception {
-		return purchaseDao.getPurchase(tranNo);
+		Purchase purchase = purchaseDao.getPurchase(tranNo);
+		
+		purchase.setBuyer(userService.getUser(purchase.getBuyer().getUserId()));
+		purchase.setPurchaseProd(productService.getProduct(purchase.getPurchaseProd().getProdNo()));
+		purchase.setPaymentOption(purchase.getPaymentOption().trim());
+		purchase.setTranCode(purchase.getTranCode().trim());
+		
+		return purchase;
 	}
 
 	public Map<String,Object> getPurchaseList(Search search, String userId) throws Exception {
-		int totalCount = purchaseDao.getTotalCount(search, userId);
+		Map<String,Object> map01 = new HashMap<String, Object>();
+		
+		map01.put("beginDate", "");
+		map01.put("endDate", "");
+		if (search.getSearchKeyword() != null && !search.getSearchKeyword().equals("")) {
+			map01.put("beginDate", search.getSearchKeyword().split(",")[0]);
+			map01.put("endDate", search.getSearchKeyword().split(",")[1]);
+		}
+		
+		map01.put("search", search);
+		map01.put("userId", userId);
+		
+		int totalCount = purchaseDao.getTotalCount(map01);
 		System.out.println("totalCount :: "+totalCount);
 		
-		List<Purchase> list = purchaseDao.getPurchaseList(search, userId);
+		map01.put("startRowNum", (search.getCurrentPage()-1) * search.getPageSize() + 1);
+		map01.put("endRowNum", search.getCurrentPage() * search.getPageSize());
+		List<Purchase> list = purchaseDao.getPurchaseList(map01);
+		
+		for (int i = 0; i < list.size(); i++) {
+			list.get(i).setBuyer(userService.getUser(list.get(i).getBuyer().getUserId()));
+			list.get(i).setPurchaseProd(productService.getProduct(list.get(i).getPurchaseProd().getProdNo()));
+			list.get(i).setPaymentOption(list.get(i).getPaymentOption().trim());
+			list.get(i).setTranCode(list.get(i).getTranCode().trim());
+		}
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("totalCount", totalCount);
@@ -50,7 +92,14 @@ public class PurchaseServiceImpl implements PurchaseService {
 	}
 
 	public int updatePurchase(Purchase purchase) throws Exception {
-		return purchaseDao.updatePurchase(purchase);
+		int result = purchaseDao.updatePurchase(purchase);
+		
+		Purchase purchase01 = purchaseDao.getPurchase(purchase.getTranNo());
+		if (purchase01.getTranAmount() != purchase.getTranAmount()) {
+			int tranAmount = purchase.getTranAmount() - purchase01.getTranAmount();
+			productService.updateProdAmount(purchase.getPurchaseProd().getProdNo(), tranAmount);
+		}
+		return result;
 	}
 
 	@Override

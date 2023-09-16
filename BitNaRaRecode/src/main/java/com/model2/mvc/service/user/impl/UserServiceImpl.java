@@ -56,7 +56,12 @@ public class UserServiceImpl implements UserService{
 		int totalCount = userDao.getTotalCount(search);
 		System.out.println("totalCount :: "+totalCount);
 		
-		List<User> list = userDao.getUserList(search);
+		Map<String,Object> map01 = new HashMap<String, Object>();
+		map01.put("search", search);
+		map01.put("startRowNum", (search.getCurrentPage()-1) * search.getPageSize() + 1);
+		map01.put("endRowNum", search.getCurrentPage() * search.getPageSize());
+		
+		List<User> list = userDao.getUserList(map01);
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("totalCount", totalCount);

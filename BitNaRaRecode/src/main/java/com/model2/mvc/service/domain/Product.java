@@ -20,6 +20,10 @@ public class Product {
 	// JSON ==> Domain Object  Binding을 위해 추가된 부분
 	private String regDateString;
 	
+	/////////////////////////////////09.16 추가
+	private int prodAmount;
+	/////////////////////////////////09.16 추가
+	
 	private List<ProdImage> imgList = new ArrayList<ProdImage>();
 	
 	public Product(){
@@ -95,6 +99,16 @@ public class Product {
 	public void setRegDateString(String regDateString) {
 		this.regDateString = regDateString;
 	}
+	
+	/////////////////////////////////09.16 추가
+	public int getProdAmount() {
+		return prodAmount;
+	}
+
+	public void setProdAmount(int prodAmount) {
+		this.prodAmount = prodAmount;
+	}
+	/////////////////////////////////09.16 추가
 
 	public List<ProdImage> getImgList() {
 		return imgList;
@@ -108,7 +122,7 @@ public class Product {
 	public String toString() {
 		return "ProductVO : [fileName]" + fileName
 				+ "[manuDate]" + manuDate+ "[price]" + price + "[prodDetail]" + prodDetail
-				+ "[prodName]" + prodName + "[prodNo]" + prodNo
-				+ "[imgList]"+imgList;
+				+ "[prodName]" + prodName + ",prodAmount=" + prodAmount 
+				+"[prodNo]" + prodNo + "[imgList]"+imgList;
 	}	
 }

@@ -29,7 +29,7 @@ public class ProductServiceImpl implements ProductService{
 		System.out.println(":: "+getClass()+" default Constructor Call.....");
 	}
 	
-	public int addProduct(Product product) throws Exception {
+	public Product addProduct(Product product) throws Exception {
 		int result = productDao.addProduct(product);
 		
 		int prodNo = productDao.getSeq_product_prod_no();
@@ -40,22 +40,44 @@ public class ProductServiceImpl implements ProductService{
 			productDao.addProdImage(img);
 		}
 		
-		return result;
+		return productDao.getProduct(prodNo);
 	}
 
 	public Product getProduct(int prodNo) throws Exception {
 		Product product = productDao.getProduct(prodNo);
+		if (product.getProTranCode() != null)
+			product.setProTranCode(product.getProTranCode().trim());
+		
 		product.setImgList(productDao.getProdImgList(prodNo));
 		return product;
 	}
 
 	public Map<String,Object> getProductList(Search search) throws Exception {
-		int totalCount = productDao.getTotalCount(search);
+		Map<String,Object> map01 = new HashMap<String, Object>();
+		
+		map01.put("beginPrice", -1);
+		map01.put("endPrice", -1);
+		if (search.getSearchKeyword() != null && !search.getSearchKeyword().equals("")) {
+			if (search.getSearchCondition().equals("1")) {
+				search.setSearchKeyword("%"+search.getSearchKeyword().toLowerCase()+"%");
+			}
+			if (search.getSearchCondition().equals("2")) {
+				map01.put("beginPrice", Integer.parseInt(search.getSearchKeyword().split(",")[0]));
+				map01.put("endPrice", Integer.parseInt(search.getSearchKeyword().split(",")[1]));
+			}
+		}
+		map01.put("search", search);
+		
+		int totalCount = productDao.getTotalCount(map01);
 		System.out.println("totalCount :: "+totalCount);
 		
-		List<Product> list = productDao.getProductList(search);
+		map01.put("startRowNum", (search.getCurrentPage()-1) * search.getPageSize() + 1);
+		map01.put("endRowNum", search.getCurrentPage() * search.getPageSize());
+		List<Product> list = productDao.getProductList(map01);
 		
 		for (int i=0; i<list.size(); i++) {
+			if (list.get(i).getProTranCode() != null)
+				list.get(i).setProTranCode(list.get(i).getProTranCode().trim());
 			list.get(i).setImgList(productDao.getProdImgList(list.get(i).getProdNo()));
 		}
 		
@@ -75,6 +97,14 @@ public class ProductServiceImpl implements ProductService{
 		}
 		
 		return result;
+	}
+	
+	public int updateProdAmount(int prodNo, int tranAmount) throws Exception {
+		Map map = new HashMap();
+		map.put("prodNo", prodNo);
+		map.put("tranAmount", tranAmount);
+		
+		return productDao.updateProdAmount(map);
 	}
 	
 	public int removeProduct(int prodNo) throws Exception {

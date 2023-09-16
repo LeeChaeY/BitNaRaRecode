@@ -172,7 +172,7 @@
 			fncPriceOrder('1');
 		})
 		
-		$(".ct_list_pop td:nth-child(3)").on("click", function () {
+		$(".ct_list_pop td:nth-child(9)").on("click", function () {
 			let j = Math.floor($(this).parent().index()/2)-1;
 			let prodNo = $(".productObject").eq(2*j).val();
 			self.location = "/product/getProduct?prodNo="+prodNo+"&menu=${ menu }";
@@ -201,7 +201,7 @@
 							//Debug...
 							//alert("JSONData : \n"+JSONData);
 							
-							$(".ct_list_pop td:nth-child(9)").eq(j).text($(".ct_list_pop td:nth-child(9)").eq(j).text().trim());
+							$(".ct_list_pop td:nth-child(11)").eq(j).text("배송중");
 						},
 						error : function(status) {
 
@@ -384,7 +384,7 @@
 			</td>
 			
 			<td></td>
-			<td align="left">${ product.price }</td>
+			<td align="left">${ product.price }&nbsp;원</td>
 			<td></td>
 			<td align="left">${ product.regDate }</td>
 			<td></td>
@@ -392,15 +392,28 @@
 			<td align="left">
 			<c:choose>
 				<c:when test="${(empty user) || !empty user && !empty user.role && user.role.equals('user') }">
-					${ empty product.proTranCode ? "판매중" : "재고 없음" }
-					<%-- 재고 없음, 판매중
-					구매에 물품 아이디가 없으면 판매중, 있으면 재고 없음 --%>			
+					<c:choose>
+						<c:when test="${ product.prodAmount == 0 }">
+							재고 없음
+						</c:when>
+						<c:otherwise>
+							남은 수량 : ${ product.prodAmount }&nbsp;개
+						</c:otherwise>
+					</c:choose>		
 				</c:when>
+				
 				<c:when test="${ !empty user.role && user.role.equals('admin') }">
 					<%-- manage, search 상관없음 --%>
 					<c:choose>
 						<c:when test="${ empty product.proTranCode }">
-							판매중
+							<c:choose>
+						<c:when test="${ product.prodAmount == 0 }">
+							재고 없음
+						</c:when>
+						<c:otherwise>
+							남은 수량 : ${ product.prodAmount }&nbsp;개
+						</c:otherwise>
+					</c:choose>		
 						</c:when>
 						<c:when test="${ product.proTranCode.equals('2') }">
 							판매완료

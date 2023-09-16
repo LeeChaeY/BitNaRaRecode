@@ -35,6 +35,7 @@ CREATE TABLE product (
 	manufacture_day	VARCHAR2(8),
 	price 							NUMBER(10),
 	image_file 					VARCHAR2(100),
+	prod_amount					NUMBER, 
 	reg_date 					DATE,
 	PRIMARY KEY(prod_no)
 );
@@ -48,8 +49,9 @@ CREATE TABLE transaction (
 	receiver_phone		VARCHAR2(14),
 	demailaddr 				VARCHAR2(100),
 	dlvy_request 			VARCHAR2(100),
+	tran_amount			NUMBER, 
 	tran_status_code	CHAR(3),
-	order_data 				DATE,
+	order_date 				DATE,
 	dlvy_date 				DATE,
 	PRIMARY KEY(tran_no)
 );
@@ -141,15 +143,30 @@ INSERT INTO users
 VALUES ( 'user23', 'SCOTT', '2323', 'user', NULL, NULL, NULL, NULL, sysdate);
            
            
-insert into product values (seq_product_prod_no.nextval,'vaio vgn FS70B','소니 바이오 노트북 신동품','20120514',2000000, 'AHlbAAAAtBqyWAAA.jpg',to_date('2012/12/14 11:27:27', 'YYYY/MM/DD HH24:MI:SS'));
-insert into product values (seq_product_prod_no.nextval,'자전거','자전거 좋아요~','20120514',10000, 'AHlbAAAAvetFNwAA.jpg',to_date('2012/11/14 10:48:43', 'YYYY/MM/DD HH24:MI:SS'));
-insert into product values (seq_product_prod_no.nextval,'보르도','최고 디자인 신품','20120201',1170000, 'AHlbAAAAvewfegAB.jpg',to_date('2012/10/14 10:49:39', 'YYYY/MM/DD HH24:MI:SS'));
-insert into product values (seq_product_prod_no.nextval,'보드세트','한시즌 밖에 안썼습니다. 눈물을 머금고 내놓음 ㅠ.ㅠ','20120217', 200000, 'AHlbAAAAve1WwgAC.jpg',to_date('2012/11/14 10:50:58', 'YYYY/MM/DD HH24:MI:SS'));
-insert into product values (seq_product_prod_no.nextval,'인라인','좋아욥','20120819', 20000, 'AHlbAAAAve37LwAD.jpg',to_date('2012/11/14 10:51:40', 'YYYY/MM/DD HH24:MI:SS'));
-insert into product values (seq_product_prod_no.nextval,'삼성센스 2G','sens 메모리 2Giga','20121121',800000, 'AHlbAAAAtBqyWAAA.jpg',to_date('2012/11/14 18:46:58', 'YYYY/MM/DD HH24:MI:SS'));
-insert into product values (seq_product_prod_no.nextval,'연꽃','정원을 가꿔보세요','20121022',232300, 'AHlbAAAAtDPSiQAA.jpg',to_date('2012/11/15 17:39:01', 'YYYY/MM/DD HH24:MI:SS'));
-insert into product values (seq_product_prod_no.nextval,'삼성센스','노트북','20120212',600000, 'AHlbAAAAug1vsgAA.jpg',to_date('2012/11/12 13:04:31', 'YYYY/MM/DD HH24:MI:SS'));
+insert into product values (seq_product_prod_no.nextval,'vaio vgn FS70B','소니 바이오 노트북 신동품','20120514',2000000, 'AHlbAAAAtBqyWAAA.jpg',3,to_date('2012/12/14 11:27:27', 'YYYY/MM/DD HH24:MI:SS'));
+insert into prod_image (img_id, prod_no, file_name) 
+values (seq_prod_image_img_id.nextval, seq_product_prod_no.currval, 'AHlbAAAAtBqyWAAA.jpg');
 
+insert into product values (seq_product_prod_no.nextval,'자전거','자전거 좋아요~','20120514',10000, 'AHlbAAAAvetFNwAA.jpg',3,to_date('2012/11/14 10:48:43', 'YYYY/MM/DD HH24:MI:SS'));
+insert into prod_image values (seq_prod_image_img_id.nextval, seq_product_prod_no.currval, 'AHlbAAAAtBqyWAAA.jpg');
+
+insert into product values (seq_product_prod_no.nextval,'보르도','최고 디자인 신품','20120201',1170000, 'AHlbAAAAvewfegAB.jpg',3,to_date('2012/10/14 10:49:39', 'YYYY/MM/DD HH24:MI:SS'));
+insert into prod_image values (seq_prod_image_img_id.nextval, seq_product_prod_no.currval, 'AHlbAAAAvewfegAB.jpg');
+
+insert into product values (seq_product_prod_no.nextval,'보드세트','한시즌 밖에 안썼습니다. 눈물을 머금고 내놓음 ㅠ.ㅠ','20120217', 200000, 'AHlbAAAAve1WwgAC.jpg',3,to_date('2012/11/14 10:50:58', 'YYYY/MM/DD HH24:MI:SS'));
+insert into prod_image values (seq_prod_image_img_id.nextval, seq_product_prod_no.currval, 'AHlbAAAAve1WwgAC.jpg');
+
+insert into product values (seq_product_prod_no.nextval,'인라인','좋아욥','20120819', 20000, 'AHlbAAAAve37LwAD.jpg',3,to_date('2012/11/14 10:51:40', 'YYYY/MM/DD HH24:MI:SS'));
+insert into prod_image values (seq_prod_image_img_id.nextval, seq_product_prod_no.currval, 'AHlbAAAAve37LwAD.jpg');
+
+insert into product values (seq_product_prod_no.nextval,'삼성센스 2G','sens 메모리 2Giga','20121121',800000, 'AHlbAAAAtBqyWAAA.jpg',3,to_date('2012/11/14 18:46:58', 'YYYY/MM/DD HH24:MI:SS'));
+insert into prod_image values (seq_prod_image_img_id.nextval, seq_product_prod_no.currval, 'AHlbAAAAtBqyWAAA.jpg');
+
+insert into product values (seq_product_prod_no.nextval,'연꽃','정원을 가꿔보세요','20121022',232300, 'AHlbAAAAtDPSiQAA.jpg',3,to_date('2012/11/15 17:39:01', 'YYYY/MM/DD HH24:MI:SS'));
+insert into prod_image values (seq_prod_image_img_id.nextval, seq_product_prod_no.currval, 'AHlbAAAAtDPSiQAA.jpg');
+
+insert into product values (seq_product_prod_no.nextval,'삼성센스','노트북','20120212',600000, 'AHlbAAAAug1vsgAA.jpg',3,to_date('2012/11/12 13:04:31', 'YYYY/MM/DD HH24:MI:SS'));
+insert into prod_image values (seq_prod_image_img_id.nextval, seq_product_prod_no.currval, 'AHlbAAAAug1vsgAA.jpg');
 
 commit;
 

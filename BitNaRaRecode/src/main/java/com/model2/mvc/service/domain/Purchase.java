@@ -20,6 +20,10 @@ public class Purchase {
 	// JSON ==> Domain Object  Binding을 위해 추가된 부분
 	private String orderDateString;
 	
+	/////////////////////////////////09.16 추가
+	private int tranAmount;
+	/////////////////////////////////09.16 추가
+	
 	public Purchase(){
 	}
 	
@@ -107,6 +111,16 @@ public class Purchase {
 		this.orderDateString = orderDateString;
 	}
 	
+	/////////////////////////////////09.16 추가
+	public int getTranAmount() {
+		return tranAmount;
+	}
+
+	public void setTranAmount(int tranAmount) {
+		this.tranAmount = tranAmount;
+	}
+	/////////////////////////////////09.16 추가
+	
 	@Override
 	public String toString() {
 		return "PurchaseVO [buyer=" + buyer + ", purchaseProd=" + purchaseProd
@@ -114,7 +128,7 @@ public class Purchase {
 				+ ", divyRequest=" + divyRequest + ", orderDate=" 
 				+ orderDate + ", paymentOption=" + paymentOption 
 				+ ", receiverName=" + receiverName + ", receiverPhone="
-				+ receiverPhone + ", tranCode=" + tranCode + ", tranNo="
-				+ tranNo + "]";
+				+ receiverPhone + ", tranCode=" + tranCode + ",tranAmount="+tranAmount  
+				+ ", tranNo=" + tranNo + "]";
 	}
 }

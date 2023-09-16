@@ -73,6 +73,11 @@ $(function() {
 			<td></td>
 		</tr>
 		<tr>
+			<td>구매개수</td>
+			<td>${ purchase.tranAmount }</td>
+			<td></td>
+		</tr>
+		<tr>
 			<td>구매자아이디</td>
 			<td>${ purchase.buyer.userId }</td>
 			<td></td>

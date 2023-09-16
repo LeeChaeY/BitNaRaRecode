@@ -79,6 +79,7 @@ $(function() {
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
+	
 	<tr>
 		<td width="104" class="ct_write">
 			물품번호 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
@@ -97,6 +98,16 @@ $(function() {
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
+	
+	<tr>
+		<td width="104" class="ct_write">구매수량</td>
+		<td bgcolor="D6D6D6" width="1"></td>
+		<td class="ct_write01">${ purchase.tranAmount }</td>
+	</tr>
+	<tr>
+		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
+	</tr>
+	
 	<tr>
 		<td width="104" class="ct_write">
 			구매자아이디 <img	src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
@@ -119,6 +130,7 @@ $(function() {
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
+	
 	<tr>
 		<td width="104" class="ct_write">구매자이름</td>
 		<td bgcolor="D6D6D6" width="1"></td>
@@ -127,6 +139,7 @@ $(function() {
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
+	
 	<tr>
 		<td width="104" class="ct_write">구매자연락처</td>
 		<td bgcolor="D6D6D6" width="1"></td>
@@ -135,6 +148,7 @@ $(function() {
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
+	
 	<tr>
 		<td width="104" class="ct_write">구매자주소</td>
 		<td bgcolor="D6D6D6" width="1"></td>
@@ -143,6 +157,7 @@ $(function() {
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
+	
 	<tr>
 		<td width="104" class="ct_write">구매요청사항</td>
 		<td bgcolor="D6D6D6" width="1"></td>
@@ -151,12 +166,12 @@ $(function() {
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
+	
 	<tr>
 		<td width="104" class="ct_write">배송희망일</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">${ purchase.divyDate }</td>
 	</tr>
-
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
@@ -166,7 +181,6 @@ $(function() {
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">${ purchase.orderDate }</td>
 	</tr>
-
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>

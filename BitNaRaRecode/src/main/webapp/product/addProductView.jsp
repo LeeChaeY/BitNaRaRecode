@@ -56,6 +56,7 @@ function fncAddProduct(){
 	var detail = $("input[name='prodDetail']").val();
 	var manuDate = $("input[name='manuDate']").val();
 	var price = $("input[name='price']").val();
+	var prodAmount = $("input[name='prodAmount']").val();
 
 	if(name == null || name.length<1){
 		alert("상품명은 반드시 입력하여야 합니다.");
@@ -71,6 +72,10 @@ function fncAddProduct(){
 	}
 	if(price == null || price.length<1){
 		alert("가격은 반드시 입력하셔야 합니다.");
+		return;
+	}
+	if(prodAmount == null || prodAmount.length<1){
+		alert("상품수량은 반드시 입력하셔야 합니다.");
 		return;
 	}
 
@@ -155,6 +160,21 @@ $(function() {
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
+	
+	<tr>
+		<td width="104" class="ct_write">
+			상품수량 <img  src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
+		</td>
+		<td bgcolor="D6D6D6" width="1"></td>
+		<td class="ct_write01">
+			<input type="number" name="prodAmount" 	class="ct_input_g" 
+						style="width: 100px; height: 19px" maxLength="10">&nbsp;개
+		</td>
+	</tr>
+	<tr>
+		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
+	</tr>
+	
 	<tr>
 		<td width="104" class="ct_write">
 			상품상세정보 <img	src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
@@ -168,6 +188,7 @@ $(function() {
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
+	
 	<tr>
 		<td width="104" class="ct_write">
 			제조일자 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
@@ -186,19 +207,21 @@ $(function() {
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
+	
 	<tr>
 		<td width="104" class="ct_write">
 			가격 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-			<input type="text" name="price" 	class="ct_input_g" 
+			<input type="number" name="price" 	class="ct_input_g" 
 						style="width: 100px; height: 19px" maxLength="10">&nbsp;원
 		</td>
 	</tr>
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
+	
 	<tr>
 		<td width="104" class="ct_write">상품이미지</td>
 		<td bgcolor="D6D6D6" width="1"></td>

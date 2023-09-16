@@ -73,13 +73,13 @@
 			self.location = "/product/getProduct?menu=search&prodNo="+prodNo+"";
 		});
 
-		$( ".ct_list_pop td:nth-child(5)" ).on("click" , function() {
+		$( ".ct_list_pop td:nth-child(7)" ).on("click" , function() {
 			let j = Math.floor($(this).parent().index()/2)-1;
 			let tranNo = $(".purchaseObject").eq(3*j).val();
 			self.location = "/purchase/getPurchase?tranNo="+tranNo+"";
 		});
 		
-		$( ".ct_list_pop td:nth-child(11)" ).on("click" , function() {
+		$( ".ct_list_pop td:nth-child(13)" ).on("click" , function() {
 			let j = Math.floor($(this).parent().index()/2)-1;
 			let tranNo = $(".purchaseObject").eq(3*j).val();
 			let tranCode = $(".purchaseObject").eq(3*j+2).val();
@@ -103,7 +103,7 @@
 							//Debug...
 							//alert("JSONData : \n"+JSONData);
 							
-							$(".ct_list_pop td:nth-child(11)").eq(j).text("");
+							$(".ct_list_pop td:nth-child(13)").eq(j).text("");
 						},
 						error : function(status) {
 
@@ -208,6 +208,8 @@
 		<td class="ct_line02"></td>
 		<td class="ct_list_b" width="150">상품명</td>
 		<td class="ct_line02"></td>
+		<td class="ct_list_b" width="150">구매수량</td>
+		<td class="ct_line02"></td>
 		<td class="ct_list_b" width="300">구매일자</td>
 		<td class="ct_line02"></td>
 		<td class="ct_list_b">배송주소</td>
@@ -228,6 +230,7 @@
 			${ i }
 		</td>
 		<td></td>
+		
 		<td align="left">
 		<input class="purchaseObject" style="display: none;" value="${purchase.tranNo}"/>
 		<input class="purchaseObject" style="display: none;" value="${purchase.purchaseProd.prodNo}"/>
@@ -238,6 +241,10 @@
 			${ purchase.purchaseProd.prodName }
 		</td>
 		<td></td>
+		
+		<td align="left">${ purchase.tranAmount }</td>
+		<td></td>
+		
 		<td align="left">
 			${ purchase.orderDate }
 			<!-- ////////////////// jQuery Event 처리로 변경됨 ///////////////////////// 
@@ -246,8 +253,10 @@
 			구매상세조회
 		</td>
 		<td></td>
+		
 		<td align="left">${ purchase.divyAddr }</td>
 		<td></td>
+		
 		<td align="left">
 			현재
 			<c:choose>
@@ -264,6 +273,7 @@
 			상태 입니다.		
 		</td>
 		<td></td>
+		
 		<td align="left">
 			<%--배송중 상태면 보임, 사용자가 배송완료되면 누르게끔
 			물건 도착하면 정보수정에 아무것도 없음, 관리자 사용자 모두 배송완료로 바뀜 --%>

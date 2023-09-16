@@ -100,6 +100,7 @@ $(function() {
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 		<input type="hidden" name="tranNo" value="${ purchase.tranNo }">
 	</tr>
+	
 	<tr>
 		<td width="104" class="ct_write">구매자아이디</td>
 		<td bgcolor="D6D6D6" width="1"></td>
@@ -109,6 +110,19 @@ $(function() {
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
+	
+	<tr>
+		<td width="104" class="ct_write">구매수량</td>
+		<td bgcolor="D6D6D6" width="1"></td>
+		<td class="ct_write01">
+			<input 	type="number" name="tranAmount" class="ct_input_g" style="width: 100px; height: 19px" 
+							maxLength="20" value="${ purchase.tranAmount }" min="1" max="${ purchase.purchaseProd.prodAmount }"/>
+		</td>
+	</tr>
+	<tr>
+		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
+	</tr>
+	 
 	<tr>
 		<td width="104" class="ct_write">구매방법</td>
 		<td bgcolor="D6D6D6" width="1"></td>
@@ -123,6 +137,7 @@ $(function() {
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
+	
 	<tr>
 		<td width="104" class="ct_write">구매자이름</td>
 		<td bgcolor="D6D6D6" width="1"></td>
@@ -134,6 +149,7 @@ $(function() {
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
+	
 	<tr>
 		<td width="104" class="ct_write">구매자 연락처</td>
 		<td bgcolor="D6D6D6" width="1"></td>
@@ -142,10 +158,10 @@ $(function() {
 							maxLength="20" value="${ purchase.receiverPhone }" />
 		</td>
 	</tr>
-
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
+	
 	<tr>
 		<td width="104" class="ct_write">구매자주소</td>
 		<td bgcolor="D6D6D6" width="1"></td>
@@ -157,6 +173,7 @@ $(function() {
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
+	
 	<tr>
 		<td width="104" class="ct_write">구매요청사항</td>
 		<td bgcolor="D6D6D6" width="1"></td>
@@ -168,6 +185,7 @@ $(function() {
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
+	
 	<tr>
 		<td width="104" class="ct_write">배송희망일자</td>
 		<td bgcolor="D6D6D6" width="1"></td>

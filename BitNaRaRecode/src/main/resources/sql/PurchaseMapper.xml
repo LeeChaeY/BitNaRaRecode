@@ -28,15 +28,16 @@
   		<result property="receiverPhone" column="receiver_phone" jdbcType="VARCHAR"/>
   		<result property="divyAddr" column="demailaddr" jdbcType="VARCHAR"/>
   		<result property="divyRequest" column="dlvy_request" jdbcType="VARCHAR"/>
+  		<result property="tranAmount" column="tran_amount" jdbcType="NUMERIC"/>
   		<result property="tranCode" column="tran_status_code" jdbcType="CHAR"/>
-  		<result property="orderDate" column="order_data" jdbcType="DATE"/>
+  		<result property="orderDate" column="order_date" jdbcType="DATE"/>
   		<result property="divyDate" column="dlvy_date" jdbcType="DATE"/>
   	</resultMap>
   	
   	<insert id="addPurchase" parameterType="purchase">
 		INSERT 
 		INTO transaction (tran_no,prod_no,buyer_id,payment_option,receiver_name,receiver_phone
-								,demailaddr,dlvy_request,tran_status_code,order_data,dlvy_date) 
+								,demailaddr,dlvy_request,tran_amount,tran_status_code,order_date,dlvy_date) 
 		VALUES (			seq_transaction_tran_no.NEXTVAL, 
 								#{purchaseProd.prodNo}, 
 								#{buyer.userId}, 
@@ -45,14 +46,19 @@
 								#{receiverPhone:VARCHAR},  
 								#{divyAddr:VARCHAR}, 
 								#{divyRequest:VARCHAR}, 
+								#{tranAmount:NUMERIC}, 
 								'2', 
 								SYSDATE, 
 								TO_DATE(#{divyDate:DATE}, 'YYYY/MM/DD') )		
   	</insert>
   	
+  	<select id="getSeq_transaction_tran_no" resultType="int">
+  		SELECT seq_transaction_tran_no.CURRVAL FROM dual
+  	</select>
+  	
   	<select 	id="getPurchase" parameterType="int" resultMap="purchaseSelectMap">
 		SELECT tran_no,prod_no,buyer_id,payment_option,receiver_name,receiver_phone
-					,demailaddr,dlvy_request,tran_status_code,order_data,dlvy_date
+					,demailaddr,dlvy_request,tran_amount,tran_status_code,order_date,dlvy_date
 		FROM transaction  						
 		WHERE tran_no = #{tranNo}			
   	</select>
@@ -78,6 +84,9 @@
   			<if test="receiverPhone != null">
   				receiver_phone = #{receiverPhone}, 
   			</if>
+  			<if test="tranAmount != null">
+  				tran_amount = #{tranAmount}, 
+  			</if>
   		</trim>	
   		WHERE tran_no = #{tranNo}
   	</update>
@@ -96,10 +105,10 @@
   						buyer_id = #{userId}
   						<if test='!beginDate.equals("") and !endDate.equals("")'>
 	  						<if test='endDate.equals("SYSDATE")'>
-	  							AND  order_data BETWEEN #{beginDate} AND SYSDATE
+	  							AND  order_date BETWEEN #{beginDate} AND SYSDATE
 	  						</if>
 	  						<if test='!endDate.equals("SYSDATE")'>
-	  							AND  order_data BETWEEN #{beginDate} AND #{endDate}
+	  							AND  order_date BETWEEN #{beginDate} AND #{endDate}
 	  						</if>
   						</if>
   					</where>
@@ -115,14 +124,14 @@
 		  						buyer_id = #{userId}
 		  						<if test='!beginDate.equals("") and !endDate.equals("")'>
 			  						<if test='endDate.equals("SYSDATE")'>
-			  							AND  order_data BETWEEN #{beginDate} AND SYSDATE
+			  							AND  order_date BETWEEN #{beginDate} AND SYSDATE
 			  						</if>
 			  						<if test='!endDate.equals("SYSDATE")'>
-			  							AND  order_data BETWEEN #{beginDate} AND #{endDate}
+			  							AND  order_date BETWEEN #{beginDate} AND #{endDate}
 			  						</if>
 		  						</if>
 		  						</where>
-			  					ORDER BY order_data DESC
+			  					ORDER BY order_date DESC
 			  					)  inner_table 
 			  		WHERE ROWNUM &lt;= #{endRowNum}	)
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 

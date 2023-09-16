@@ -72,7 +72,7 @@ public class PurchaseController {
 		
 		System.out.println("/purchase/addPurchase : POST : "+purchase);
 		//Business Logic
-		purchaseService.addPurchase(purchase);
+		purchase = purchaseService.addPurchase(purchase);
 		
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("forward:/purchase/addPurchase.jsp");

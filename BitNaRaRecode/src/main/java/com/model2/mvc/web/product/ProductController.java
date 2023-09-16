@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.UUID;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -84,18 +85,22 @@ public class ProductController {
 			if (files.size() != 0) {
 	            try {
 	                // 업로드된 파일 저장
-//	            	String uploadDir = "C:\\work\\03.git\\bit-mini-09model2\\09.Model2MVCShop(stu)\\src\\main\\\\webapp\\images\\uploadFiles\\";
-//	            	String uploadDir = "F:\\git\\bit-mini-10model2\\10.Model2MVCShop(stu)\\src\\main\\webapp\\images\\uploadFiles\\";
-	            	String uploadDir = "C:\\work\\03.git\\BitNaRaRecode\\BitNaRaRecode\\src\\main\\webapp\\images\\uploadFiles";
+	            	String uploadDir = "F:\\git\\bit-mini-10model2\\10.Model2MVCShop(stu)\\src\\main\\webapp\\images\\uploadFiles\\";
+//	            	String uploadDir = "C:\\work\\03.git\\BitNaRaRecode\\BitNaRaRecode\\src\\main\\webapp\\images\\uploadFiles";
 //	                String uploadDir = "\\images\\uploadFiles\\"; // 실제 경로로 변경해야 합니다.
 	            	for (int i=0; i<files.size(); i++) {
-		                File uploadFile = new File(uploadDir, files.get(i).getOriginalFilename());
+	            		// uuid 생성 
+	                    UUID uuid = UUID.randomUUID();
+	                    
+	                    //savedName 변수에 uuid + 원래 이름 추가
+	                    String savedName = uuid.toString()+"_"+files.get(i).getOriginalFilename();
+		                File uploadFile = new File(uploadDir, savedName);
 		                files.get(i).transferTo(uploadFile);
 		                
-		                if (i == 0) product.setFileName(files.get(i).getOriginalFilename());
+		                if (i == 0) product.setFileName(savedName);
 		                System.out.println("iiiiiiiiiiiiiiiiiiiiiii"+i);
 		                
-		                imgList.add(new ProdImage(product.getProdNo(), files.get(i).getOriginalFilename()));
+		                imgList.add(new ProdImage(product.getProdNo(), savedName));
 		                
 		                //fileNames += files.get(i).getOriginalFilename()+",";
 	            	}
@@ -106,12 +111,9 @@ public class ProductController {
 	            	
 	            	// 파일 업로드 성공 메시지 등을 처리하거나 다른 작업을 수행합니다.
 	                product.setManuDate(product.getManuDate().replace("-", ""));
-	                System.out.println("ssssssssssssss");
 	                
-	                int result = productService.addProduct(product);
-	                System.out.println("FFFFFFFFF: "+result);
+	                product = productService.addProduct(product);
 	    			model.addAttribute("product", product);
-	    			System.out.println("ssssssssssssss");
 	                
 	            } catch (Exception e) {
 	                e.printStackTrace();
@@ -187,6 +189,7 @@ public class ProductController {
 		System.out.println("updateProduct : POST : "+product);
 		
 		String deleteDir = "F:\\git\\bit-mini-10model2\\10.Model2MVCShop(stu)\\src\\main\\webapp\\images\\uploadFiles\\";
+//    	String deleteDir = "C:\\work\\03.git\\BitNaRaRecode\\BitNaRaRecode\\src\\main\\webapp\\images\\uploadFiles";
     	if (!deleteImg.equals("")) {
     		for (String imgId : deleteImg.substring(0, deleteImg.length()).split(",")) {
     			ProdImage img = productService.getProdImage(Integer.parseInt(imgId));
@@ -210,20 +213,26 @@ public class ProductController {
 		if (files.size() != 0) {
             try {
                 // 업로드된 파일 저장
-//            	String uploadDir = "C:\\work\\03.git\\bit-mini-09model2\\09.Model2MVCShop(stu)\\src\\main\\\\webapp\\images\\uploadFiles\\";
             	String uploadDir = "F:\\git\\bit-mini-10model2\\10.Model2MVCShop(stu)\\src\\main\\webapp\\images\\uploadFiles\\";
+//            	String uploadDir = "C:\\work\\03.git\\BitNaRaRecode\\BitNaRaRecode\\src\\main\\webapp\\images\\uploadFiles";
 //             String uploadDir = "\\images\\uploadFiles\\"; // 실제 경로로 변경해야 합니다.
             	
             	List<ProdImage> imgList = new ArrayList<ProdImage>();
             	
             	for (int i=0; i<files.size(); i++) {
             		if (!files.get(i).getOriginalFilename().equals("")) {
-	                File uploadFile = new File(uploadDir, files.get(i).getOriginalFilename());
-	                files.get(i).transferTo(uploadFile);
-	                
-//	                if (i == 0) product.setFileName(files.get(i).getOriginalFilename());
-	                
-	                imgList.add(new ProdImage(product.getProdNo(), files.get(i).getOriginalFilename()));
+            			// uuid 생성 
+            	        UUID uuid = UUID.randomUUID();
+            	        
+            	        //savedName 변수에 uuid + 원래 이름 추가
+            	        String savedName = uuid.toString()+"_"+files.get(i).getOriginalFilename();
+            			
+		                File uploadFile = new File(uploadDir, savedName);
+		                files.get(i).transferTo(uploadFile);
+		                
+//		                if (i == 0) product.setFileName(files.get(i).getOriginalFilename());
+		                
+		                imgList.add(new ProdImage(product.getProdNo(), savedName));
             		}
 	            }
             	

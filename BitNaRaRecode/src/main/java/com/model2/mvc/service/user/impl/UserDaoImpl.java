@@ -48,14 +48,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public List<User> getUserList(Search search) throws Exception {
-		Map<String,Object> map = new HashMap<String, Object>();
-		map.put("search", search);
-		map.put("startRowNum", (search.getCurrentPage()-1) * search.getPageSize() + 1);
-		map.put("endRowNum", search.getCurrentPage() * search.getPageSize());
-		
-		System.out.println("---------------------------------startRowNum"+((search.getCurrentPage()-1) * search.getPageSize() + 1));
-		System.out.println("-------------------------------endRowNum"+ (search.getCurrentPage() * search.getPageSize()));
+	public List<User> getUserList(Map map) throws Exception {
 		
 		return sqlSession.selectList("UserMapper.getUserList", map);
 	}

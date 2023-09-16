@@ -34,76 +34,64 @@
    	<!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 		
-		//============= 회원원가입 화면이동 =============
-		$( function() {
-			//==> 추가된부분 : "addUser"  Event 연결
-			$("a[href='#' ]:contains('회원가입')").on("click" , function() {
-				
-				self.location = "/user/addUser"
-			});
+	$( function() {
+		//==> 추가된부분 : "addUser"  Event 연결
+		$("a[href='#' ]:contains('회원가입')").on("click" , function() {
+			$(self.location).attr("href","/user/addUser");
 		});
-		
+
 		//============= 로그인 화면이동 =============
-		$( function() {
-			//==> 추가된부분 : "addUser"  Event 연결
-			$("a[href='#' ]:contains('로 그 인')").on("click" , function() {
-				self.location = "/user/login"
-			});
+		$("a[href='#' ]:contains('로 그 인')").on("click" , function() {
+			$(self.location).attr("href","/user/login");
 		});
-		
-		$( function() {
-			//==> 추가된부분 : "addUser"  Event 연결
-			$("a[href='#' ]:contains('개인정보조회')").on("click" , function() {
-				self.location = "/user/getUser?userId=${user.userId}"
-			});
+	
+		//============= 회원정보조회 Event  처리 =============	
+	 	$("a:contains('회원정보조회')").on("click" , function() {
+			$(self.location).attr("href","/user/listUser");
+		}); 
+	
+		//=============  개인정보조회 Event  처리 =============	
+	 	$( "a[href='#' ]:contains('개인정보조회')" ).on("click" , function() {
+			$(self.location).attr("href","/user/getUser?userId=${user.userId}");
 		});
-		
-		$( function() {
-			//==> 추가된부분 : "addUser"  Event 연결
-			$("a[href='#' ]:contains('회원정보조회')").on("click" , function() {
-				self.location = "/user/listUser"
-			});
+
+		//==> 추가된부분 : "판매상품등록"  Event 연결
+		$("a[href='#' ]:contains('판매상품등록')").on("click" , function() {
+			if ("${user}" == "") {
+				$(self.location).attr("href","/user/login");
+			} else{
+				$(self.location).attr("href","/product/addProduct");
+			}
 		});
-		
-		$( function() {
-			//==> 추가된부분 : "addUser"  Event 연결
-			$("a[href='#' ]:contains('판매상품등록')").on("click" , function() {
-				self.location = "/product/addProduct"
-			});
+	
+		//==> 추가된부분 : "판매상품관리"  Event 연결
+		$(".list-group-item a[href='#']:contains('판매상품관리')").on("click" , function() {
+			if ("${user}" == "") {
+				$(self.location).attr("href","/user/login");
+			} else{
+				$(self.location).attr("href","/product/listProduct?menu=manage");
+			}
 		});
-		
-		$( function() {
-			//==> 추가된부분 : "addUser"  Event 연결
-			$("a[href='#' ]:contains('판매상품관리')").on("click" , function() {
-				self.location = "/product/listProduct?menu=manage"
-			});
+
+		//==> 추가된부분 : "상 품 검 색"  Event 연결
+		$("a[href='#' ]:contains('상 품 검 색')").on("click" , function() {
+			$(self.location).attr("href","/product/listProduct?menu=search");
 		});
-		
-		$( function() {
-			//==> 추가된부분 : "addUser"  Event 연결
-			$("a[href='#' ]:contains('상품검색')").on("click" , function() {
-				self.location = "/product/listProduct?menu=search"
-			});
+
+		//==> 추가된부분 : "구매이력조회"  Event 연결
+		$("a[href='#' ]:contains('구매이력조회')").on("click" , function() {
+			if ("${user}" == "") {
+				$(self.location).attr("href","/user/login");
+			} else{
+				$(self.location).attr("href","/purchase/listPurchase");
+			}
 		});
-		
-		$( function() {
-			//==> 추가된부분 : "addUser"  Event 연결
-			$("a[href='#' ]:contains('구매이력조회')").on("click" , function() {
-				
-				if ("${user}" == "") {
-					self.location = "/user/login"
-				} else{
-					self.location = "/purchase/listPurchase"
-				}
-			});
+
+		//==> 추가된부분 : "addUser"  Event 연결
+		$("a[href='#' ]:contains('최근본상품')").on("click" , function() {
+			popWin = window.open("/history.jsp","popWin","left=300, top=200, width=300, height=200, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
 		});
-		
-		$( function() {
-			//==> 추가된부분 : "addUser"  Event 연결
-			$("a[href='#' ]:contains('최근본상품')").on("click" , function() {
-				popWin = window.open("/history.jsp","popWin","left=300, top=200, width=300, height=200, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
-			});
-		});
+	});
 		
 	</script>	
 	

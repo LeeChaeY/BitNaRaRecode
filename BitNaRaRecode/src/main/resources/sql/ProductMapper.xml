@@ -26,6 +26,7 @@
   		<result property="manuDate" column="manufacture_day" jdbcType="VARCHAR"/>
   		<result property="price" column="price" jdbcType="NUMERIC"/>
   		<result property="fileName" column="image_file" jdbcType="VARCHAR"/>
+  		<result property="prodAmount" column="prod_amount" jdbcType="NUMERIC"/>
   		<result property="regDate" column="reg_date" jdbcType="DATE"/>
   		<result property="proTranCode" column="pro_tran_code" jdbcType="VARCHAR"/>
   	</resultMap>
@@ -38,13 +39,14 @@
   	
   	<insert id="addProduct" parameterType="product">
 		INSERT 
-		INTO product (prod_no,prod_name,prod_detail,manufacture_day,price,image_file,reg_date) 
+		INTO product (prod_no,prod_name,prod_detail,manufacture_day,price,image_file,prod_amount,reg_date) 
 		VALUES (			seq_product_prod_no.NEXTVAL,  
 								#{prodName}, 
 								#{prodDetail:VARCHAR}, 
 								#{manuDate:VARCHAR},  
 								#{price:NUMERIC}, 
 								#{fileName:VARCHAR}, 
+								#{prodAmount:NUMERIC}, 
 								SYSDATE )		
   	</insert>
   	
@@ -75,6 +77,19 @@
   			</if>
   			<if test="fileName != null">
   				image_file = #{fileName}, 
+  			</if>
+  			<if test="prodAmount != null">
+  				prod_amount = #{prodAmount}, 
+  			</if>
+  		</trim>	
+  		WHERE prod_no = #{prodNo}
+  	</update>
+  	
+  	<update id="updateProdAmount" parameterType="map">
+  		UPDATE product 
+  		<trim prefix="set" suffixOverrides=",">
+  			<if test="prodAmount != null">
+  				prod_amount -= #{tranAmount}
   			</if>
   		</trim>	
   		WHERE prod_no = #{prodNo}
