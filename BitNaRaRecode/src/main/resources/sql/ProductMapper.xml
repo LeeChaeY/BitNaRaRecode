@@ -55,9 +55,9 @@
   	</select>
   	
   	<select 	id="getProduct" parameterType="int" resultMap="productSelectMap">
-		SELECT P.*, tran_status_code AS pro_tran_code
-		FROM product P LEFT OUTER JOIN transaction T ON P.prod_no = T.prod_no 						
-		WHERE P.prod_no = #{prodNo}			
+		SELECT prod_no,prod_name,prod_detail,manufacture_day,price,image_file,prod_amount,reg_date
+		FROM product					
+		WHERE prod_no = #{prodNo}			
   	</select>
   	
   	<update id="updateProduct" parameterType="product">
@@ -88,8 +88,8 @@
   	<update id="updateProdAmount" parameterType="map">
   		UPDATE product 
   		<trim prefix="set" suffixOverrides=",">
-  			<if test="prodAmount != null">
-  				prod_amount -= #{tranAmount}
+  			<if test="tranAmount != null">
+  				prod_amount = prod_amount - #{tranAmount}
   			</if>
   		</trim>	
   		WHERE prod_no = #{prodNo}
@@ -103,9 +103,8 @@
   	
   	<select id="getTotalCount" parameterType="map" resultType="int">
   		SELECT COUNT(*) AS totalCount  
-  		FROM (SELECT P.*, tran_status_code AS pro_tran_code
-  					FROM product P LEFT OUTER JOIN transaction T 
-  					ON P.prod_no = T.prod_no
+  		FROM (SELECT *
+  					FROM product
   					<where>
   						<if test='search.searchCondition != null and search.searchKeyword != null and !search.searchKeyword.equals("")'>
 	  						<if test='search.searchCondition.equals("1")'>
@@ -122,9 +121,8 @@
   	<select 	id="getProductList" parameterType="map" resultMap="productSelectMap">
 		SELECT * 
 		FROM ( SELECT inner_table. * ,  ROWNUM AS row_seq 
-					 FROM (SELECT P.*, tran_status_code AS pro_tran_code
-					 			FROM product P LEFT OUTER JOIN transaction T 
-					 			ON P.prod_no = T.prod_no 
+					 FROM (SELECT prod_no,prod_name,prod_detail,manufacture_day,price,image_file,prod_amount,reg_date
+					 			FROM product
 			  					<where>
 			  						<if test='search.searchCondition != null'>
 	  									<if test='search.searchCondition.equals("1") and search.searchKeyword != null and !search.searchKeyword.equals("")'>
@@ -138,13 +136,13 @@
 			  					ORDER BY 
 			  					<choose>
 			  						<when test='search.orderCondition != null and search.orderCondition.equals("1")'>
-			  							P.price
+			  							price
 			  						</when>
 			  						<when test='search.orderCondition != null and search.orderCondition.equals("2")'>
-			  							P.price DESC
+			  							price DESC
 			  						</when>
 			  						<otherwise>
-			  							P.prod_no
+			  							prod_no
 			  						</otherwise>
 			  					</choose>
 			  					)  inner_table 

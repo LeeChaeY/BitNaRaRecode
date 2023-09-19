@@ -1,12 +1,13 @@
 
 DROP TABLE transaction;
+DROP TABLE prod_image;
 DROP TABLE product;
 DROP TABLE users;
-DROP TABLE prod_image;
+
 
 DROP SEQUENCE seq_product_prod_no;
 DROP SEQUENCE seq_transaction_tran_no;
-DROP TABLE prod_image;
+DROP SEQUENCE seq_prod_image_img_id;
 
 
 CREATE SEQUENCE seq_product_prod_no	 	INCREMENT BY 1 START WITH 10000;

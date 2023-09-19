@@ -24,6 +24,12 @@ public class Purchase {
 	private int tranAmount;
 	/////////////////////////////////09.16 추가
 	
+	/////////////////////////////////09.19 추가
+	private String phone1;
+	private String phone2;
+	private String phone3;
+	/////////////////////////////////09.19 추가
+	
 	public Purchase(){
 	}
 	
@@ -89,6 +95,14 @@ public class Purchase {
 	}
 	public void setReceiverPhone(String receiverPhone) {
 		this.receiverPhone = receiverPhone;
+		
+		/////////////////////////////////09.19 추가
+		if(receiverPhone != null && receiverPhone.length() !=0 ){
+			phone1 = receiverPhone.split("-")[0];
+			phone2 = receiverPhone.split("-")[1];
+			phone3 = receiverPhone.split("-")[2];
+		}
+		/////////////////////////////////09.19 추가
 	}
 	public String getTranCode() {
 		return tranCode;
@@ -120,6 +134,18 @@ public class Purchase {
 		this.tranAmount = tranAmount;
 	}
 	/////////////////////////////////09.16 추가
+	
+	/////////////////////////////////09.19 추가
+	public String getPhone1() {
+		return phone1;
+	}
+	public String getPhone2() {
+		return phone2;
+	}
+	public String getPhone3() {
+		return phone3;
+	}
+	/////////////////////////////////09.19 추가
 	
 	@Override
 	public String toString() {

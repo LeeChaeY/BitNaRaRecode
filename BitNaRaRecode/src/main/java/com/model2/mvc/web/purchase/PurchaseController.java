@@ -1,5 +1,6 @@
 package com.model2.mvc.web.purchase;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -156,7 +157,10 @@ public class PurchaseController {
 			searchKeyword = search.getSearchKeyword();
 		
 		// Business logic ผ๖วเ
-		Map<String , Object> map=purchaseService.getPurchaseList(search, ((User)session.getAttribute("user")).getUserId());
+		Map<String , Object> map = new HashMap();
+		if (((User)session.getAttribute("user")).getRole().equals("admin")) 
+			map = purchaseService.getPurchaseList(search, "");
+		else map = purchaseService.getPurchaseList(search, ((User)session.getAttribute("user")).getUserId());
 		
 		if(search.getSearchKeyword() != null && !search.getSearchKeyword().equals(""))
 			search.setSearchKeyword(searchKeyword);

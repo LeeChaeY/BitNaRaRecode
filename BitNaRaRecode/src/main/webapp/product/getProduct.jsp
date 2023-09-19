@@ -213,7 +213,7 @@
 								<img src="/images/ct_btnbg03.gif" width="14" height="23">
 							</td>
 						</c:when>
-						<c:when test="${empty user || !empty user && user.role.equals('user') && empty product.proTranCode}">
+						<c:when test="${empty user || !empty user && user.role.equals('user') && product.prodAmount != 0}">
 							<td width="17" height="23">
 								<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 							</td>
@@ -250,22 +250,13 @@
 		<td align="center">
 			<h3>
 				<c:choose>
-					<c:when test="${ empty product.proTranCode }">
+					<c:when test="${ product.prodAmount != 0 }">
 						해당 상품은 판매중입니다.
 					</c:when>
 					<c:when test="${ !empty user && user.role.equals('admin') && menu.equals('manage') && !empty product.proTranCode }">
-						해당 상품은 판매 완료되었습니다. 수정이 불가능합니다.
+						해당 상품은 판매가 시작되었습니다. 수정이 불가능합니다.
 					</c:when>
-					<c:when test="${ !empty user && user.role.equals('admin') && !empty product.proTranCode && product.proTranCode.equals('2') }">
-						해당 상품은 판매 완료되었습니다.
-					</c:when>
-					<c:when test="${!empty user && user.role.equals('admin') && !empty product.proTranCode && product.proTranCode.equals('3') }">
-						해당 상품은 배송중입니다.
-					</c:when>
-					<c:when test="${ !empty user && user.role.equals('admin') && !empty product.proTranCode && product.proTranCode.equals('4') }">
-						해당 상품은 배송 완료되었습니다.
-					</c:when>
-					<c:when test="${ !empty product.proTranCode }">
+					<c:when test="${ product.prodAmount == 0 }">
 						해당 상품은 품절되었습니다.
 					</c:when>
 				</c:choose>

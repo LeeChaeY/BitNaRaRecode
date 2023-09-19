@@ -53,6 +53,8 @@ public class PurchaseServiceImpl implements PurchaseService {
 		purchase.setPurchaseProd(productService.getProduct(purchase.getPurchaseProd().getProdNo()));
 		purchase.setPaymentOption(purchase.getPaymentOption().trim());
 		purchase.setTranCode(purchase.getTranCode().trim());
+		if (purchase.getDivyDate() != null)
+			purchase.setDivyDate(purchase.getDivyDate().substring(0, 10));
 		
 		return purchase;
 	}

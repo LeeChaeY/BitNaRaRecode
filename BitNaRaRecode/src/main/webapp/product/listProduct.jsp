@@ -172,45 +172,10 @@
 			fncPriceOrder('1');
 		})
 		
-		$(".ct_list_pop td:nth-child(9)").on("click", function () {
+		$(".ct_list_pop td:nth-child(3)").on("click", function () {
 			let j = Math.floor($(this).parent().index()/2)-1;
-			let prodNo = $(".productObject").eq(2*j).val();
+			let prodNo = $(".productObject").eq(j).val();
 			self.location = "/product/getProduct?prodNo="+prodNo+"&menu=${ menu }";
-		})
-		
-		$(".ct_list_pop td:nth-child(9) input[type='button']").on("click", function () {
-			let j = Math.floor($(this).parent().parent().index()/2)-1;
-			let prodNo = $(".productObject").eq(2*j).val();
-			let proTranCode = $(".productObject").eq(2*j+1).val();
-			//alert($(".ct_list_pop td:nth-child(9)").eq(j).text());
-			let url = "/purchase/json/updateTranCodeByProd?prodNo="+prodNo+"&tranCode="+proTranCode+"&currentPage=${resultPage.currentPage}";
-			
-			$.ajax( 
-					{
-						url : url,
-						method : "GET" ,
-						dataType : "json" ,
-						headers : {
-							"Accept" : "application/json",
-							"Content-Type" : "application/json"
-						},
-						success : function(JSONData , status) {
-
-							//Debug...
-							//alert(status);
-							//Debug...
-							//alert("JSONData : \n"+JSONData);
-							
-							$(".ct_list_pop td:nth-child(11)").eq(j).text("배송중");
-						},
-						error : function(status) {
-
-							//Debug...
-							alert("error");
-						}
-				});
-			
-			//self.location = "/purchase/updateTranCodeByProd?prodNo="+prodNo+"&tranCode=${list.get(i).proTranCode }&currentPage=${resultPage.currentPage}";
 		})
 		
 		function loadMoreContent() {
@@ -296,12 +261,12 @@
 				<tr>
 					<td width="80"><strong> &nbsp금액별 검색 </strong></td>
 					<td width="150" class="ct_write01">
-						<input type="number" name="beginPrice" class="ct_input_g" 
+						<input type="number" name="beginPrice" class="ct_input_g" min="0" value="0"
 										style="width: 100px; height: 19px" maxLength="20" value="${ !empty beginPrice ? beginPrice : ''}"/> 원
 					</td>
 					<td width="20"><strong> ~ </strong></td>
 					<td width="150" class="ct_write01">
-						<input type="number" name="endPrice" class="ct_input_g" 
+						<input type="number" name="endPrice" class="ct_input_g" min="0"
 										style="width: 100px; height: 19px;" maxLength="20" value="${ !empty endPrice ? endPrice : ''}"/> 원
 					</td>
 					<tr>
@@ -376,7 +341,6 @@
 			<td></td>
 			<td align="left">
 			<input class="productObject" style="display: none;" value="${product.prodNo}"/>
-			<input class="productObject" style="display: none;" value="${product.proTranCode}"/>
 				<!-- ////////////////// jQuery Event 처리로 변경됨 /////////////////////////
 				<a href="/product/getProduct?prodNo=${ product.prodNo }&menu=${ menu }">${ product.prodName }</a>
 				////////////////////////////////////////////////////////////////////////////////////////////////// -->
@@ -425,16 +389,6 @@
 							배송완료
 						</c:when>
 					</c:choose>
-					<c:if test="${ menu.equals('manage') &&  !empty product.proTranCode && product.proTranCode.equals('2') }">
-						<!-- ////////////////// jQuery Event 처리로 변경됨 /////////////////////////
-						<a href="/purchase/updateTranCodeByProd?prodNo=${ product.prodNo }&tranCode=${product.proTranCode }&currentPage=${resultPage.currentPage}">배송하기</a>
-						////////////////////////////////////////////////////////////////////////////////////////////////// -->
-						<input type="button" value="배송하기"/>
-					</c:if>
-					<%-- <a href="/purchase/updateTranCodeByProd?prodNo=10001&tranCode=2">배송하기</a>
-					관리자에게만 보이는 것, 상품 관리에는 있음, 상품 검색에는 없음 
-					배송하기 누르면 배송중으로 변경, 상품관리 페이지로 다시 리로드
-					배송하기 버튼이 있는 구매 완료일때 tranCode 2로 넘겨줌--%>
 				</c:when>
 			</c:choose>
 			</td>

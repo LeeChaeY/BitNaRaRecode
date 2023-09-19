@@ -102,7 +102,9 @@
   		FROM (SELECT * 
   					FROM transaction 
   					<where>
-  						buyer_id = #{userId}
+  						<if test='!userId.equals("")'>
+  							buyer_id = #{userId}
+  						</if>
   						<if test='!beginDate.equals("") and !endDate.equals("")'>
 	  						<if test='endDate.equals("SYSDATE")'>
 	  							AND  order_date BETWEEN #{beginDate} AND SYSDATE
@@ -121,7 +123,9 @@
 					 FROM (SELECT *
 					 			FROM transaction 
 					 			<where>
-		  						buyer_id = #{userId}
+					 			<if test='!userId.equals("")'>
+  									buyer_id = #{userId}
+  								</if>
 		  						<if test='!beginDate.equals("") and !endDate.equals("")'>
 			  						<if test='endDate.equals("SYSDATE")'>
 			  							AND  order_date BETWEEN #{beginDate} AND SYSDATE
@@ -150,10 +154,7 @@
 			</if>
   		</trim>	
   		<where>
-			<if test='tranCode.equals("2")'>
-				prod_no = #{purchaseProd.prodNo}
-			</if>
-			<if test='tranCode.equals("3")'>
+  			<if test='tranNo != null'>
 				tran_no = #{tranNo}
 			</if>
 		</where>

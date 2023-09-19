@@ -123,6 +123,6 @@ public class Product {
 		return "ProductVO : [fileName]" + fileName
 				+ "[manuDate]" + manuDate+ "[price]" + price + "[prodDetail]" + prodDetail
 				+ "[prodName]" + prodName + ",prodAmount=" + prodAmount 
-				+"[prodNo]" + prodNo + "[imgList]"+imgList;
+				+"[prodNo]" + prodNo + "[imgList]"+imgList +"[proTranCode]"+proTranCode;
 	}	
 }

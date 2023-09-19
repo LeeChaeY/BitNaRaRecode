@@ -45,6 +45,7 @@ public class ProductServiceImpl implements ProductService{
 
 	public Product getProduct(int prodNo) throws Exception {
 		Product product = productDao.getProduct(prodNo);
+		
 		if (product.getProTranCode() != null)
 			product.setProTranCode(product.getProTranCode().trim());
 		

@@ -85,8 +85,8 @@ public class ProductController {
 			if (files.size() != 0) {
 	            try {
 	                // 업로드된 파일 저장
-	            	String uploadDir = "F:\\git\\bit-mini-10model2\\10.Model2MVCShop(stu)\\src\\main\\webapp\\images\\uploadFiles\\";
-//	            	String uploadDir = "C:\\work\\03.git\\BitNaRaRecode\\BitNaRaRecode\\src\\main\\webapp\\images\\uploadFiles";
+//	            	String uploadDir = "F:\\git\\bit-mini-10model2\\10.Model2MVCShop(stu)\\src\\main\\webapp\\images\\uploadFiles\\";
+	            	String uploadDir = "C:\\work\\03.git\\BitNaRaRecode\\BitNaRaRecode\\src\\main\\webapp\\images\\uploadFiles\\";
 //	                String uploadDir = "\\images\\uploadFiles\\"; // 실제 경로로 변경해야 합니다.
 	            	for (int i=0; i<files.size(); i++) {
 	            		// uuid 생성 
@@ -188,8 +188,8 @@ public class ProductController {
 		
 		System.out.println("updateProduct : POST : "+product);
 		
-		String deleteDir = "F:\\git\\bit-mini-10model2\\10.Model2MVCShop(stu)\\src\\main\\webapp\\images\\uploadFiles\\";
-//    	String deleteDir = "C:\\work\\03.git\\BitNaRaRecode\\BitNaRaRecode\\src\\main\\webapp\\images\\uploadFiles";
+//		String deleteDir = "F:\\git\\bit-mini-10model2\\10.Model2MVCShop(stu)\\src\\main\\webapp\\images\\uploadFiles\\";
+    	String deleteDir = "C:\\work\\03.git\\BitNaRaRecode\\BitNaRaRecode\\src\\main\\webapp\\images\\uploadFiles\\";
     	if (!deleteImg.equals("")) {
     		for (String imgId : deleteImg.substring(0, deleteImg.length()).split(",")) {
     			ProdImage img = productService.getProdImage(Integer.parseInt(imgId));
@@ -213,8 +213,8 @@ public class ProductController {
 		if (files.size() != 0) {
             try {
                 // 업로드된 파일 저장
-            	String uploadDir = "F:\\git\\bit-mini-10model2\\10.Model2MVCShop(stu)\\src\\main\\webapp\\images\\uploadFiles\\";
-//            	String uploadDir = "C:\\work\\03.git\\BitNaRaRecode\\BitNaRaRecode\\src\\main\\webapp\\images\\uploadFiles";
+//            	String uploadDir = "F:\\git\\bit-mini-10model2\\10.Model2MVCShop(stu)\\src\\main\\webapp\\images\\uploadFiles\\";
+            	String uploadDir = "C:\\work\\03.git\\BitNaRaRecode\\BitNaRaRecode\\src\\main\\webapp\\images\\uploadFiles\\";
 //             String uploadDir = "\\images\\uploadFiles\\"; // 실제 경로로 변경해야 합니다.
             	
             	List<ProdImage> imgList = new ArrayList<ProdImage>();
@@ -293,7 +293,7 @@ public class ProductController {
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		System.out.println("listProduct ::"+resultPage);
-		search.setSearchKeyword("");
+		
 		// Model 과 View 연결
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);

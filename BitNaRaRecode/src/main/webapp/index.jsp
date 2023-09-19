@@ -74,12 +74,21 @@
 		});
 
 		//==> 추가된부분 : "상 품 검 색"  Event 연결
-		$("a[href='#' ]:contains('상 품 검 색')").on("click" , function() {
+		$("a[href='#' ]:contains('상품검색')").on("click" , function() {
 			$(self.location).attr("href","/product/listProduct?menu=search");
 		});
 
 		//==> 추가된부분 : "구매이력조회"  Event 연결
 		$("a[href='#' ]:contains('구매이력조회')").on("click" , function() {
+			if ("${user}" == "") {
+				$(self.location).attr("href","/user/login");
+			} else{
+				$(self.location).attr("href","/purchase/listPurchase");
+			}
+		});
+		
+		//==> 추가된부분 : "구매관리"  Event 연결
+		$("a[href='#' ]:contains('구매관리')").on("click" , function() {
 			if ("${user}" == "") {
 				$(self.location).attr("href","/user/login");
 			} else{
@@ -177,6 +186,9 @@
 						 <li class="list-group-item"><a href="#">상품검색</a></li>
 						  <li class="list-group-item">
 						  	<a href="#">구매이력조회</a> <i class="glyphicon glyphicon-ban-circle"></i>
+						  </li>
+						  <li class="list-group-item">
+						  	<a href="#">구매관리</a> <i class="glyphicon glyphicon-ban-circle"></i>
 						  </li>
 						 <li class="list-group-item">
 						 	<a href="#">최근본상품</a> <i class="glyphicon glyphicon-ban-circle"></i>

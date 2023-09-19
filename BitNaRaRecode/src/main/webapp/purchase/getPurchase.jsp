@@ -227,7 +227,7 @@ $(function() {
 	</tr>
 	<tr>
 		<td align="center">
-			<c:if test="${ empty purchase.tranCode && !purchase.tranCode.equals('2') }">
+			<c:if test="${ !purchase.tranCode.equals('2') }">
 				<h3>해당 상품의 배송이 시작되었습니다. 구매정보수정이 불가능합니다.</h3>
 			</c:if>
 		</td>

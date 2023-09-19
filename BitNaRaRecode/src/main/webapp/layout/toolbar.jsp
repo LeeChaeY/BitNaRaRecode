@@ -51,6 +51,11 @@
 			$("a[href='#' ]:contains('구매이력조회')").on("click" , function() {
 				$(self.location).attr("href","/purchase/listPurchase");
 			});
+			
+			//==> 추가된부분 : "구매관리"  Event 연결
+			$("a[href='#' ]:contains('구매관리')").on("click" , function() {
+				$(self.location).attr("href","/purchase/listPurchase");
+			});
 	
 			//==> 추가된부분 : "addUser"  Event 연결
 			$("a[href='#' ]:contains('최근본상품')").on("click" , function() {
@@ -129,6 +134,10 @@
 	                     </a>
 	                     <ul class="dropdown-menu">
 	                         <li><a href="#">상 품 검 색</a></li>
+	                         
+	                         <c:if test="${user.role == 'admin'}">
+	                           <li><a href="#">구매관리</a></li>
+	                         </c:if>
 	                         
 	                         <c:if test="${user.role == 'user'}">
 	                           <li><a href="#">구매이력조회</a></li>
