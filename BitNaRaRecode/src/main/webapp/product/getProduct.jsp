@@ -56,6 +56,24 @@
 					self.location = "/purchase/addPurchase?prodNo=${ product.prodNo }";
 				}
 			});
+
+			$( "td.ct_btn01:contains('장바구니에 담기')" ).on("click" , function() {
+				if (${user == null}) {
+					alert('로그인을 해주세요.');
+					self.location = "/user/login";
+				} else {
+					let cartAmount = $("input[name='cartAmount']").val();
+					$.ajax({
+						url: '/purchase/json/addCart',
+						method: 'POST',
+						data: { "prodNo": "${product.prodNo}", "cartAmount":cartAmount}, 
+						success: function(response) {
+							alert("장바구니로 이동합니다.");
+						}
+					});
+					self.location = "/purchase/listCart?currentPage=0";
+				}
+			});
 			 
 			$( "td.ct_btn01:contains('이전')" ).on("click" , function() {
 				history.go(-1);
@@ -204,9 +222,6 @@
 								<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 							</td>
 							<td background="/images/ct_btnbg02.gif" class="ct_btn01"	style="padding-top: 3px;">
-								<!-- ////////////////// jQuery Event 처리로 변경됨 ///////////////////////// 
-								<a href="/product/listProduct?menu=manage">확인</a>
-								////////////////////////////////////////////////////////////////////////////////////////////////// -->
 								확인
 							</td>
 							<td width="14" height="23">
@@ -218,10 +233,24 @@
 								<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 							</td>
 							<td background="/images/ct_btnbg02.gif" class="ct_btn01"	style="padding-top: 3px;">
-								<!-- ////////////////// jQuery Event 처리로 변경됨 ///////////////////////// 
-								<a href="/purchase/addPurchase?prodNo=${ product.prodNo }">구매</a>  <a href="/user/login" onClick="alert('로그인을 해주세요.');">구매</a>
-								////////////////////////////////////////////////////////////////////////////////////////////////// -->
 								구매
+							</td>
+							<td width="14" height="23">
+								<img src="/images/ct_btnbg03.gif" width="14" height="23">
+							</td>
+
+
+
+							<td width="30"></td>
+							<td width="17" height="23">
+							<input type="number" name="cartAmount" class="ct_input_g" style="width: 100px; height: 19px" 
+								value="1" min="1" max="${ product.prodAmount }">
+
+							<td width="17" height="23">
+								<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
+							</td>
+							<td background="/images/ct_btnbg02.gif" class="ct_btn01"	style="padding-top: 3px;">
+								장바구니에 담기
 							</td>
 							<td width="14" height="23">
 								<img src="/images/ct_btnbg03.gif" width="14" height="23">
@@ -234,9 +263,6 @@
 					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 				</td>
 				<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top: 3px;">
-					<!-- ////////////////// jQuery Event 처리로 변경됨 ///////////////////////// 
-					<a href="javascript:history.go(-1)">이전</a>  
-					////////////////////////////////////////////////////////////////////////////////////////////////// -->
 					이전
 				</td>
 				<td width="14" height="23">

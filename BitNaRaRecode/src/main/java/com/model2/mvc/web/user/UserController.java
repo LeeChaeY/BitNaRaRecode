@@ -142,7 +142,7 @@ public class UserController {
 		//Business Logic
 		boolean result=userService.checkDuplication(userId);
 		// Model °ú View ¿¬°á
-		model.addAttribute("result", new Boolean(result));
+		model.addAttribute("result", result);
 		model.addAttribute("userId", userId);
 
 		return "forward:/user/checkDuplication.jsp";

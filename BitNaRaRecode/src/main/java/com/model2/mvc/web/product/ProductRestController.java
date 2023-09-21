@@ -181,7 +181,6 @@ public class ProductRestController {
 	
 	@RequestMapping(value="json/getProduct/{prodNo}", method=RequestMethod.GET )
 	public Product getProduct(@PathVariable int prodNo, @RequestParam("menu") String menu) throws Exception {
-		String resultPage = "forward:/product/getProduct.jsp";
 		System.out.println("json/product/getProduct : GET : prodNo : "+prodNo+", menu : "+menu);
 		//Business Logic
 		Product product = productService.getProduct(prodNo);

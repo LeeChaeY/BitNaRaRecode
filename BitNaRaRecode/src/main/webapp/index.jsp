@@ -96,6 +96,11 @@
 			}
 		});
 
+		//==> 추가된부분 : "장바구니"  Event 연결
+		$("a[href='#' ]:contains('장바구니')").on("click" , function() {
+				$(self.location).attr("href","/purchase/listCart?currentPage=0");
+		});
+
 		//==> 추가된부분 : "addUser"  Event 연결
 		$("a[href='#' ]:contains('최근본상품')").on("click" , function() {
 			popWin = window.open("/history.jsp","popWin","left=300, top=200, width=300, height=200, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
@@ -183,16 +188,19 @@
 							<i class="glyphicon glyphicon-shopping-cart"></i> 상품구매
 	    			</div>
 					<ul class="list-group">
-						 <li class="list-group-item"><a href="#">상품검색</a></li>
-						  <li class="list-group-item">
-						  	<a href="#">구매이력조회</a> <i class="glyphicon glyphicon-ban-circle"></i>
-						  </li>
-						  <li class="list-group-item">
-						  	<a href="#">구매관리</a> <i class="glyphicon glyphicon-ban-circle"></i>
-						  </li>
-						 <li class="list-group-item">
-						 	<a href="#">최근본상품</a> <i class="glyphicon glyphicon-ban-circle"></i>
-						 </li>
+						<li class="list-group-item"><a href="#">상품검색</a></li>
+						<li class="list-group-item">
+							<a href="#">구매이력조회</a> <i class="glyphicon glyphicon-ban-circle"></i>
+						</li>
+						<li class="list-group-item">
+							<a href="#">구매관리</a> <i class="glyphicon glyphicon-ban-circle"></i>
+						</li>
+						<li class="list-group-item">
+							<a href="#">장바구니</a> <i class="glyphicon glyphicon-ban-circle"></i>
+						</li>
+						<li class="list-group-item">
+							<a href="#">최근본상품</a> <i class="glyphicon glyphicon-ban-circle"></i>
+						</li>
 					</ul>
 				</div>
 				

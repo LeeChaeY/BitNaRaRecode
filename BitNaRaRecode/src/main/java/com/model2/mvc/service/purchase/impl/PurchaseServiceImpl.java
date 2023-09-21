@@ -12,9 +12,8 @@ import com.model2.mvc.common.Search;
 import com.model2.mvc.service.purchase.PurchaseService;
 import com.model2.mvc.service.purchase.dao.PurchaseDao;
 import com.model2.mvc.service.user.UserService;
-import com.model2.mvc.service.domain.Product;
+import com.model2.mvc.service.domain.Cart;
 import com.model2.mvc.service.domain.Purchase;
-import com.model2.mvc.service.domain.User;
 import com.model2.mvc.service.product.ProductService;
 
 @Service("purchaseServiceImpl")
@@ -111,6 +110,50 @@ public class PurchaseServiceImpl implements PurchaseService {
 	
 	public int updateTranCode(Purchase purchase) throws Exception {
 		return purchaseDao.updateTranCode(purchase);
+	}
+	
+	
+	
+	
+	
+	@Override
+	public int addCart(Cart cart) throws Exception {
+		return purchaseDao.addCart(cart);
+	}
+
+	@Override
+	public Map<String,Object> getCartList(Search search, String userId) throws Exception {
+		Map<String,Object> map01 = new HashMap<String, Object>();
+		map01.put("userId", userId);
+		
+		int totalCount = purchaseDao.getCartTotalCount(userId);
+		System.out.println("cartTotalCount :: "+totalCount);
+		
+		map01.put("startRowNum", (search.getCurrentPage()-1) * search.getPageSize() + 1);
+		map01.put("endRowNum", search.getCurrentPage() * search.getPageSize());
+		List<Cart> list = purchaseDao.getCartList(map01);
+		
+		for (int i = 0; i < list.size(); i++) {
+			list.get(i).setBuyer(userService.getUser(list.get(i).getBuyer().getUserId()));
+			list.get(i).setCartProd(productService.getProduct(list.get(i).getCartProd().getProdNo()));
+			list.get(i).setTranPrice(list.get(i).getCartAmount() * list.get(i).getCartProd().getPrice());
+		}
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("totalCount", totalCount);
+		map.put("list", list);
+		
+		return map;
+	}
+
+	@Override
+	public int updateCartAmount(Cart cart) throws Exception {
+		return purchaseDao.updateCartAmount(cart);
+	}
+
+	@Override
+	public int updateCartCheckActive(int cartId) throws Exception {
+		return purchaseDao.updateCartCheckActive(cartId);
 	}
 
 }

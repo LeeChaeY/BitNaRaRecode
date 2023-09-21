@@ -1,6 +1,5 @@
 package com.model2.mvc.service.user.impl;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

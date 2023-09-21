@@ -205,7 +205,7 @@
 </table>
 
 <table width="95%" border="0" cellspacing="0" cellpadding="0"	style="margin-top: 10px;" align="center">
-	<tr>
+	<tr height="30px">
 		<td colspan="11">
 			전체  ${ resultPage.totalCount } 건수,	현재 ${ resultPage.currentPage } 페이지
 		</td>

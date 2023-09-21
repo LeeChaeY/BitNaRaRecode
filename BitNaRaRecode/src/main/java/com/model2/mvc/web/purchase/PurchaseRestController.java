@@ -3,7 +3,6 @@ package com.model2.mvc.web.purchase;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.model2.mvc.common.Page;
 import com.model2.mvc.common.Search;
+import com.model2.mvc.service.domain.Cart;
 import com.model2.mvc.service.domain.Product;
 import com.model2.mvc.service.domain.Purchase;
 import com.model2.mvc.service.domain.User;
 import com.model2.mvc.service.product.ProductService;
 import com.model2.mvc.service.purchase.PurchaseService;
-
-import oracle.net.aso.f;
 
 
 //==> 회원관리 Controller
@@ -182,6 +180,54 @@ public class PurchaseRestController {
 		Map map = new HashMap<>();
 		map.put("menu", "manage");
 		map.put("currentPage", currentPage);
+		
+		return map;
+	}
+	
+	
+	
+	
+	@RequestMapping(value="json/addCart", method=RequestMethod.POST )
+	public Cart addCart( @RequestParam("prodNo") int prodNo, @RequestParam("cartAmount") int cartAmount, HttpSession session) throws Exception {
+		System.out.println("/json/purchase/addPurchase : POST :: prodNo : "+prodNo+", cartAmount : "+cartAmount);
+		
+		Cart cart = new Cart();
+		cart.setBuyer((User)session.getAttribute("user"));
+		cart.setCartProd(new Product(prodNo));
+		cart.setCartAmount(cartAmount);
+		
+		//Business Logic
+		purchaseService.addCart(cart);
+		
+		return cart;
+	}
+	
+	@RequestMapping(value="json/updateCartAmount", method=RequestMethod.POST )
+	public Map updateTranCode(@RequestParam("cartId") int cartId, @RequestParam("cartAmount") int cartAmount) throws Exception{
+		Cart cart = new Cart();
+		cart.setCartId(cartId);
+		cart.setCartAmount(cartAmount);
+		System.out.println("/json/purchase/updateCartAmount : GET : cartId : "+cartId+", cartAmount : "+cartAmount);
+		
+		//Business Logic
+		purchaseService.updateCartAmount(cart);
+		
+		Map map = new HashMap<>();
+//		map.put("currentPage", currentPage);
+		
+		return map;
+	}
+	
+	@RequestMapping(value="json/updateCartCheckActive", method=RequestMethod.POST )
+	public Map updateCartCheckActive(@RequestParam("cartId") int cartId) throws Exception{
+		System.out.println("/json/purchase/updateCartCheckActive : GET : cartId : "+cartId);
+		
+		//Business Logic
+		purchaseService.updateCartCheckActive(cartId);
+		
+		Map map = new HashMap<>();
+//		map.put("menu", "manage");
+//		map.put("currentPage", currentPage);
 		
 		return map;
 	}

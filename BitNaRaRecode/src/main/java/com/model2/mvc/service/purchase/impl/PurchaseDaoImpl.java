@@ -1,21 +1,16 @@
 package com.model2.mvc.service.purchase.impl;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.swing.plaf.PanelUI;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import com.model2.mvc.common.Search;
 import com.model2.mvc.service.purchase.dao.PurchaseDao;
-import com.model2.mvc.service.domain.Product;
+import com.model2.mvc.service.domain.Cart;
 import com.model2.mvc.service.domain.Purchase;
-import com.model2.mvc.service.domain.User;
 
 @Repository("purchaseDaoImpl")
 public class PurchaseDaoImpl implements PurchaseDao{
@@ -66,4 +61,34 @@ public class PurchaseDaoImpl implements PurchaseDao{
 		return sqlSession.selectOne("PurchaseMapper.getTotalCount", map);
 	}
 
+	@Override
+	public int addCart(Cart cart) throws Exception {
+		return sqlSession.insert("PurchaseMapper.addCart", cart);
+	}
+
+	@Override
+	public int getSeq_cart_cart_id() throws Exception {
+		return sqlSession.selectOne("PurchaseMapper.getSeq_cart_cart_id");
+	}
+
+	@Override
+	public List<Cart> getCartList(Map map) throws Exception {
+		return sqlSession.selectList("PurchaseMapper.getCartList", map);
+	}
+
+	@Override
+	public int updateCartAmount(Cart cart) throws Exception {
+		return sqlSession.update("PurchaseMapper.updateCartAmount", cart);
+	}
+
+	@Override
+	public int updateCartCheckActive(int cartId) throws Exception {
+		return sqlSession.update("PurchaseMapper.updateCartCheckActive", cartId);
+	}
+
+	@Override
+	public int getCartTotalCount(String userId) throws Exception {
+		return sqlSession.selectOne("PurchaseMapper.getCartTotalCount", userId);
+	}
+	
 }

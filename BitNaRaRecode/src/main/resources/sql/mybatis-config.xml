@@ -15,6 +15,7 @@
 		<typeAlias alias="page" type="com.model2.mvc.common.Page" />
 		
 		<typeAlias alias="prodImg" type="com.model2.mvc.service.domain.ProdImage" />
+		<typeAlias alias="cart" type="com.model2.mvc.service.domain.Cart" />
 	</typeAliases>
 	
 

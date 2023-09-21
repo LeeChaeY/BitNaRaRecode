@@ -34,6 +34,15 @@
   		<result property="divyDate" column="dlvy_date" jdbcType="DATE"/>
   	</resultMap>
   	
+  	<resultMap type="cart" id="cartSelectMap">
+  		<result property="cartId" column="cart_id" jdbcType="NUMERIC"/>
+  		<result property="cartProd.prodNo" column="prod_no" jdbcType="NUMERIC"/>
+  		<result property="buyer.userId" column="user_id" jdbcType="VARCHAR"/>
+  		<result property="cartAmount" column="cart_amount" jdbcType="NUMERIC"/>
+  		<result property="checkActive" column="check_active" jdbcType="CHAR"/>
+  	</resultMap>
+  	
+  	
   	<insert id="addPurchase" parameterType="purchase">
 		INSERT 
 		INTO transaction (tran_no,prod_no,buyer_id,payment_option,receiver_name,receiver_phone
@@ -158,6 +167,66 @@
 				tran_no = #{tranNo}
 			</if>
 		</where>
+  	</update>
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	<insert id="addCart" parameterType="cart">
+		INSERT 
+		INTO cart (cart_id,prod_no,user_id,cart_amount,check_active) 
+		VALUES (			seq_cart_cart_id.NEXTVAL, 
+								#{cartProd.prodNo}, 
+								#{buyer.userId}, 
+								#{cartAmount:NUMERIC},
+								'1' )		
+  	</insert>
+  	
+  	<select id="getSeq_cart_cart_id" resultType="int">
+  		SELECT seq_cart_cart_id.CURRVAL FROM dual
+  	</select>
+  	
+  	<select 	id="getCartList" parameterType="map" resultMap="cartSelectMap">
+  		SELECT * 
+		FROM ( SELECT inner_table. * ,  ROWNUM AS row_seq 
+					 FROM (SELECT cart_id,prod_no,user_id,cart_amount,check_active
+								FROM cart  						
+								WHERE user_id = #{userId}
+					 			ORDER BY cart_id
+			  		 			)  inner_table 
+			  		 WHERE ROWNUM &lt;= #{endRowNum}	)
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 	
+  	</select>
+  	
+  	<select 	id="getCartTotalCount" parameterType="string" resultType="int">
+		SELECT COUNT(*) AS totalCount  
+  		FROM (SELECT *
+  					FROM cart  						
+					WHERE user_id = #{userId} ) countTable	
+  	</select>
+  	
+  	<update id="updateCartAmount" parameterType="cart">
+  		UPDATE cart 
+  		<trim prefix="set" suffixOverrides=",">
+  			<if test="cartAmount != null">
+  				cart_amount = #{cartAmount}, 
+  			</if>
+  		</trim>	
+  		WHERE cart_id = #{cartId}
+  	</update>
+  	
+  	<update id="updateCartCheckActive" parameterType="int">
+  		UPDATE cart 
+  		<trim prefix="set" suffixOverrides=",">
+  			<if test="checkActive != null">
+  				check_active = '0' 
+  			</if>
+  		</trim>	
+  		WHERE cart_id = #{cartId}
   	</update>
   	
 </mapper>

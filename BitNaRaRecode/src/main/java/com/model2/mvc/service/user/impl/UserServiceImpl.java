@@ -12,7 +12,6 @@ import com.model2.mvc.common.Search;
 import com.model2.mvc.service.user.UserService;
 import com.model2.mvc.service.user.dao.UserDao;
 import com.model2.mvc.service.domain.User;
-import com.model2.mvc.service.product.ProductService;
 
 @Service("userServiceImpl")
 public class UserServiceImpl implements UserService{

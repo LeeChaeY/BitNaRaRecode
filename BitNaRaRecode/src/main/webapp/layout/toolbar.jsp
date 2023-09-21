@@ -56,6 +56,11 @@
 			$("a[href='#' ]:contains('구매관리')").on("click" , function() {
 				$(self.location).attr("href","/purchase/listPurchase");
 			});
+
+			//==> 추가된부분 : "장바구니"  Event 연결
+			$("a[href='#' ]:contains('장바구니')").on("click" , function() {
+				$(self.location).attr("href","/purchase/listCart?currentPage=0");
+			});
 	
 			//==> 추가된부분 : "addUser"  Event 연결
 			$("a[href='#' ]:contains('최근본상품')").on("click" , function() {
@@ -141,6 +146,7 @@
 	                         
 	                         <c:if test="${user.role == 'user'}">
 	                           <li><a href="#">구매이력조회</a></li>
+							   <li><a href="#">장바구니</a></li>
 	                         </c:if>
 	                         
 	                         <li><a href="#">최근본상품</a></li>

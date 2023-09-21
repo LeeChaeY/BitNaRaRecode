@@ -30,7 +30,7 @@ public class ProductServiceImpl implements ProductService{
 	}
 	
 	public Product addProduct(Product product) throws Exception {
-		int result = productDao.addProduct(product);
+		productDao.addProduct(product);
 		
 		int prodNo = productDao.getSeq_product_prod_no();
 		product.setProdNo(prodNo);

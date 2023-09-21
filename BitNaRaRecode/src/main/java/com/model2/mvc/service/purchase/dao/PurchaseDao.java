@@ -3,7 +3,7 @@ package com.model2.mvc.service.purchase.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.model2.mvc.common.Search;
+import com.model2.mvc.service.domain.Cart;
 import com.model2.mvc.service.domain.Purchase;
 
 public interface PurchaseDao {
@@ -24,4 +24,18 @@ public interface PurchaseDao {
 
 	// 게시판 Page 처리를 위한 전체 Row(totalCount)  return
 	public int getTotalCount(Map map) throws Exception;
+	
+	
+	
+	public int addCart(Cart cart) throws Exception;
+	
+	public int getSeq_cart_cart_id() throws Exception;
+	
+	public List<Cart> getCartList(Map map) throws Exception;
+	
+	public int updateCartAmount(Cart cart) throws Exception;
+	
+	public int updateCartCheckActive(int cartId) throws Exception;
+	
+	public int getCartTotalCount(String userId) throws Exception;
 }

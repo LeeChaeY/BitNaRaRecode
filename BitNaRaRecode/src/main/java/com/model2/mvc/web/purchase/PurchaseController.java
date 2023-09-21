@@ -209,4 +209,37 @@ public class PurchaseController {
 		
 		return modelAndView;
 	}
+	
+	
+	
+	
+	
+	
+	@RequestMapping(value="listCart")
+	public ModelAndView listCart(@RequestParam("currentPage") int currentPage, HttpSession session) throws Exception{
+		System.out.println("/purchase/listCart : GET / POST :: currentPage : "+currentPage);
+		
+		Search search = new Search();
+		if(currentPage == 0) search.setCurrentPage(1);
+		else search.setCurrentPage(currentPage);
+		search.setPageSize(pageSize);
+		
+		// Business logic ผ๖วเ
+		Map<String , Object> map = new HashMap();
+		map = purchaseService.getCartList(search, ((User)session.getAttribute("user")).getUserId());
+		
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		System.out.println("/purchase/listCart ::"+resultPage);
+		
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("forward:/purchase/listCart.jsp");
+		modelAndView.addObject("list", map.get("list"));
+		modelAndView.addObject("resultPage", resultPage);
+		modelAndView.addObject("search", search);
+		
+		System.out.println("finish");
+		
+		return modelAndView;
+	}
+	
 }
